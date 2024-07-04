@@ -67,29 +67,33 @@
   </div>
 </body>
 <script>
-     let form = document.querySelector(".form");
-    let formemail = document.querySelector("#email");
-    let formpassword = document.querySelector("#password");
+ let form = document.querySelector(".form");
+let formemail = document.querySelector("#email");
+let formpassword = document.querySelector("#password");
 
-    let userinfo = JSON.parse(localStorage.getItem("user")) || [];
+let userinfo = JSON.parse(localStorage.getItem("user")) || [];
 
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        let email = formemail.value.trim();
-        let password = formpassword.value.trim();
-        if ( email && password) {
-            let isuserinfor = userinfo.find((element, index) => {
-                return element.email === email;
-            });
-            if (isuserinfor) {
-                window.location.href="home.html"
-                localStorage.setItem("conter",JSON.stringify(isuserinfor))
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let email = formemail.value.trim();
+    let password = formpassword.value.trim();
+
+    if (email) {
+        let user = userinfo.find((element) => element.email === email);
+        if (user) {
+            if (user.password === password) {
+                localStorage.setItem("conter", JSON.stringify(user));
+                window.location.href = "home.html";
             } else {
-               alert("plese singup first")
+                alert("Incorrect password. Please try again.");
             }
         } else {
-            alert("plese fill the from");
+            alert(" Incorrect email. Please try again.");
         }
-    });
+    } else {
+      alert("enter your detalis");
+    }
+});
+
 </script>
 </html>

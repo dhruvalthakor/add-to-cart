@@ -86,43 +86,50 @@
     </div>
 </body>
 <script>
-    let form = document.querySelector(".form");
-    let formname = document.querySelector("#name");
-    let formemail = document.querySelector("#email");
-    let formpassword = document.querySelector("#password");
+ let form = document.querySelector(".form");
+let formname = document.querySelector("#name");
+let formemail = document.querySelector("#email");
+let formpassword = document.querySelector("#password");
 
-    let userinfo = JSON.parse(localStorage.getItem("user")) || [];
+let userinfo = JSON.parse(localStorage.getItem("user")) || [];
 
-    form.addEventListener("submit", (e) => {
-        e.preventDefault();
-        let name = formname.value.trim();
-        let email = formemail.value.trim();
-        let password = formpassword.value.trim();
-        if (name && email && password) {
-            let isuserinfor = userinfo.some((element, index) => {
-                return element.email === email;
-            });
-            if (isuserinfor) {
-                window.location.href="login.html"
-                
-            } else {
-                let userobj = {
-                    name: name,
-                    email: email,
-                    password: password
-                }
+form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    let name = formname.value.trim();
+    let email = formemail.value.trim();
+    let password = formpassword.value.trim();
 
-                userinfo.push(userobj);
-
-                localStorage.setItem("user", JSON.stringify(userinfo));
-                formname.value = "";
-                formemail.value = "";
-            formpassword.value = "";
-            }
+    if (name === "") {
+        alert("Enter your name");
+    } else if (email === "") {
+        alert("Enter your email");
+    } else if (password === "") {
+        alert("Enter your password");
+    } else {
+        let isUserExists = userinfo.some((element) => element.email === email);
+        if (isUserExists) {
+            // window.location.href = "login.html";
+            alert("User already exists. Please login.");
         } else {
-            alert("plese fill the from");
+            let userobj = {
+                name: name,
+                email: email,
+                password: password
+            };
+
+            userinfo.push(userobj);
+
+            localStorage.setItem("user", JSON.stringify(userinfo));
+            alert("User registered successfully");
+
+            // Clear the form fields
+            formname.value = "";
+            formemail.value = "";
+            formpassword.value = "";
         }
-    });
+    }
+});
+
 </script>
 
 </html>
